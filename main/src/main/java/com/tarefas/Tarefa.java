@@ -69,7 +69,7 @@ public String getPrazo() {
     return prazo;
 }
 
-public void setPrazo(String prazo) {
+public void setPrazo(LocalDate prazo) {
     this.prazo = prazo;
 }
 

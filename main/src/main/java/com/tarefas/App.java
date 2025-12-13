@@ -37,7 +37,7 @@ public class App
             sc.nextLine();
             switch (op) {
                 case 1:
-                    
+                    gerenciador.newTarefa();
                     break;
                 case 1:
                     
