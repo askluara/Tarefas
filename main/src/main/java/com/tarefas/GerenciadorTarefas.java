@@ -26,7 +26,8 @@ public class GerenciadorTarefas {
     }
 
     /*
-     * Cria uma nova tarefa com ID automático.
+     * Cria uma nova tarefa com ID automático
+     * Desenvolvido por: Luara Araújo
      */
     public Tarefa criarTarefa(String descricao, String prazo, int prioridade) {
         int id = contadorId++;
@@ -37,6 +38,7 @@ public class GerenciadorTarefas {
 
     /*
      * Método interativo para criação de tarefa
+     * Desenvolvido por: Luara Araújo
      */
     public void newTarefa() {
 
@@ -85,12 +87,57 @@ public class GerenciadorTarefas {
     }
 
     /*
-     * Verificar caminho de dependência
+     * ---------------------------------------------------------
+     * FUNCIONALIDADE 2: REGISTRAR DEPENDENCIA
+     * DESENVOLVIDO POR: RAIANE MELGACO
+     * ---------------------------------------------------------
+     */
+    public void registrarDependencia() {
+        System.out.println("-- REGISTRAR DEPENDENCIA --");
+
+        for (Tarefa t : tarefas.values()) {
+            System.out.println("ID: " + t.getId() + " - " + t.getDescricao());
+        }
+
+        try {
+            System.out.print("DIGITE O ID DA TAREFA PAI: ");
+            int idPai = sc.nextInt();
+
+            System.out.print("DIGITE O ID DA TAREFA FILHO: ");
+            int idFilho = sc.nextInt();
+            sc.nextLine();
+
+            if (idPai == idFilho) {
+                System.out.println("Erro: IDs iguais.");
+                return;
+            }
+
+            Tarefa pai = tarefas.get(idPai);
+            Tarefa filho = tarefas.get(idFilho);
+
+            if (pai == null || filho == null) {
+                System.out.println("Erro: Tarefa nao encontrada.");
+                return;
+            }
+
+            pai.adicionarFilho(filho);
+            System.out.println("Dependencia registrada com sucesso !");
+
+        } catch (Exception e) {
+            System.out.println("Erro: Voce deve digitar apenas numeros inteiros!");
+            sc.nextLine(); // Limpa o buffer do scanner para nao travar
+        }
+    }
+
+    /*
+     * 4 - Verificar caminho de dependência
      * Mostra a sequência da Raiz até a tarefa selecionada
+     * 
+     * Desenvolvido por: Lorena Pereira
      */
     public void verificarCaminhoDependencia() {
         System.out.println("\n-- VERIFICAR CAMINHO DE DEPENDÊNCIA --");
-        
+
         System.out.print("Digite o ID da tarefa: ");
         int idBuscado;
         try {
@@ -128,46 +175,66 @@ public class GerenciadorTarefas {
         System.out.println(String.join(" -> ", caminho));
     }
 
-    /*
-     * ---------------------------------------------------------
-     * FUNCIONALIDADE 2: REGISTRAR DEPENDENCIA
-     * DESENVOLVIDO POR: RAIANE MELGACO
-     * ---------------------------------------------------------
+    /*---------------------------------------------------------
+     *FUNCIONALIDADE 5: LISTAR RAÍZES E FOLHAS
+     *DESENVOLVIDO POR: Nickolas Gabriel
+     *---------------------------------------------------------
      */
-    public void registrarDependencia() {
-        System.out.println("-- REGISTRAR DEPENDENCIA --");
+
+    /*
+     * Retorna todas as tarefas que não possuem tarefa "pai" (Raízes).
+     */
+    public List<Tarefa> listarRaizes() {
+        List<Tarefa> raizes = new ArrayList<>();
         
-        for (Tarefa t : tarefas.values()) {
-            System.out.println("ID: " + t.getId() + " - " + t.getDescricao());
+        // Itera sobre todas as tarefas armazenadas no HashMap (tarefas.values())
+        for (Tarefa tarefa : tarefas.values()) {
+            // Uma raiz é uma tarefa que não tem pai
+            if (tarefa.getPai() == null) {
+                raizes.add(tarefa);
+            }
         }
-        
-        try {
-            System.out.print("DIGITE O ID DA TAREFA PAI: ");
-            int idPai = sc.nextInt();
-            
-            System.out.print("DIGITE O ID DA TAREFA FILHO: ");
-            int idFilho = sc.nextInt();
-            sc.nextLine(); 
+        return raizes;
+    }
 
-            if (idPai == idFilho) {
-                System.out.println("Erro: IDs iguais.");
-                return;
+    /*
+     * Retorna todas as tarefas que não possuem subtarefas (Folhas / Finais).
+     */
+    public List<Tarefa> listarFolhas() {
+        List<Tarefa> folhas = new ArrayList<>();
+
+        // Itera sobre todas as tarefas armazenadas no HashMap (tarefas.values())
+        for (Tarefa tarefa : tarefas.values()) {
+            // Uma folha é uma tarefa cuja lista de filhos está vazia
+            if (tarefa.getFilhos().isEmpty()) {
+                folhas.add(tarefa);
             }
+        }
+        return folhas;
+    }
 
-            Tarefa pai = tarefas.get(idPai);
-            Tarefa filho = tarefas.get(idFilho);
+    /*
+     * Método interativo para mostrar as tarefas raízes e folhas.
+     */
+    public void mostrarRaizesEFolhas() {
 
-            if (pai == null || filho == null) {
-                System.out.println("Erro: Tarefa nao encontrada.");
-                return;
-            }
+        // 1. Mostrar Raízes
+        List<Tarefa> raizes = listarRaizes();
+        System.out.println("\n--- TAREFAS SEM DEPENDÊNCIAS (RAÍZES) ---");
+        if (raizes.isEmpty()) {
+            System.out.println("Nenhuma tarefa raiz encontrada.");
+        } else {
+            raizes.forEach(t -> System.out.println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
+        }
 
-            pai.adicionarFilho(filho);
-            System.out.println("Dependencia registrada com sucesso !");
-            
-        } catch (Exception e) {
-            System.out.println("Erro: Voce deve digitar apenas numeros inteiros!");
-            sc.nextLine(); // Limpa o buffer do scanner para nao travar
+        // 2. Mostrar Folhas
+        List<Tarefa> folhas = listarFolhas();
+        System.out.println("\n--- TAREFAS FINAIS (FOLHAS) ---");
+        if (folhas.isEmpty()) {
+            System.out.println("Nenhuma tarefa folha encontrada.");
+        } else {
+            folhas.forEach(t -> System.out.println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
         }
     }
+
 }

@@ -1,22 +1,26 @@
 package com.tarefas;
+
 import java.util.Scanner;
 
 public class App {
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         GerenciadorTarefas gerenciador = new GerenciadorTarefas();
         int op = -1;
 
         /*
-        Criando um menu simples para realização das seguintes atividades:
-        1. Criar tarefa (descrição, prazo, prioridade).
-        2. Registrar dependência: definir que uma tarefa depende de outra (pai → filho).
-        3. Remover tarefa: deve remover todas as subtarefas dependentes.
-        4. Verificar “caminho de dependência” de uma tarefa - mostrar sequência desde tarefa
-        raiz até ela.
-        5. Listar todas as tarefas sem dependências (raízes), ou todas folhas (tarefas finais).
-        6. Mostrar estrutura de tarefas em formato de árvore.
-        */
+         * Criando um menu simples para realização das seguintes atividades:
+         * 1. Criar tarefa (descrição, prazo, prioridade).
+         * 2. Registrar dependência: definir que uma tarefa depende de outra (pai →
+         * filho).
+         * 3. Remover tarefa: deve remover todas as subtarefas dependentes.
+         * 4. Verificar “caminho de dependência” de uma tarefa - mostrar sequência desde
+         * tarefa
+         * raiz até ela.
+         * 5. Listar todas as tarefas sem dependências (raízes), ou todas folhas
+         * (tarefas finais).
+         * 6. Mostrar estrutura de tarefas em formato de árvore.
+         */
         while (op != 0) {
             System.out.println("\n--- MENU --- ");
             System.out.println("Escolha o que deseja realizar:");
@@ -30,34 +34,54 @@ public class App {
             System.out.println("0. Encerrar o Programa");
             op = sc.nextInt();
             sc.nextLine();
-            
+
             switch (op) {
                 case 1:
                     gerenciador.newTarefa();
                     break;
                 case 2:
-                     gerenciador.registrarDependencia();
+                    gerenciador.registrarDependencia();
                     break;
                 case 3:
-                    
+
                     break;
                 case 4:
                     gerenciador.verificarCaminhoDependencia();
                     break;
                 case 5:
-                    
+                    System.out.println("\n--- TAREFAS SEM DEPENDÊNCIA (RAÍZES) ---");
+                    var raizes = gerenciador.listarRaizes();
+
+                    if (raizes.isEmpty()) {
+                        System.out.println("Nenhuma tarefa raiz encontrada");
+                    } else {
+                        for (Tarefa t : raizes) {
+                            System.out.println("ID: " + t.getId() + " - " + t.getDescricao() + " (Prioridade: "
+                                    + t.getPrioridade() + ")");
+                        }
+                    }
                     break;
                 case 6:
-                    
+                    System.out.println("\n--- TAREFAS FINAIS (FOLHAS) ---");
+                    var folhas = gerenciador.listarFolhas();
+
+                    if (folhas.isEmpty()) {
+                        System.out.println("Nenhuma tarefa folha encontrada.");
+                    } else {
+                        for (Tarefa t : folhas) {
+                            System.out.println("ID: " + t.getId() + " - " + t.getDescricao() + " (Prioridade: "
+                                    + t.getPrioridade() + ")");
+                        }
+                    }
                     break;
                 case 7:
-                    
+
                     break;
                 case 0:
-                System.out.println("Encerrando o programa");
-            
+                    System.out.println("Encerrando o programa");
+
                 default:
-                System.out.println("Opção inválida!");
+                    System.out.println("Opção inválida!");
                     break;
             }
         }
