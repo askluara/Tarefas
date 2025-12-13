@@ -69,7 +69,7 @@ public String getPrazo() {
     return prazo;
 }
 
-public void setPrazo(LocalDate prazo) {
+public void setPrazo(String prazo) {
     this.prazo = prazo;
 }
 
@@ -81,11 +81,11 @@ public void setPai(Tarefa pai) {
     this.pai = pai;
 }
 
-public Lista<Tarefa> getFilhos() {
+public List<Tarefa> getFilhos() {
     return filhos;
 }
 
-public void setFilhos(Lista<Tarefa> filhos) {
+public void setFilhos(List<Tarefa> filhos) {
     this.filhos = filhos;
 }
 

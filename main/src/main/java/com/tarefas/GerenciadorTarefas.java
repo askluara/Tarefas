@@ -2,7 +2,10 @@ package com.tarefas;
 
 import java.util.Scanner;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /*
  * Classe responsável por armazenar e gerenciar todas as tarefas criadas.
@@ -79,5 +82,49 @@ public class GerenciadorTarefas {
 
         criarTarefa(descricao, prazo, prioridade);
         System.out.println("-- TAREFA CRIADA COM SUCESSO --");
+    }
+
+    /*
+     * Verificar caminho de dependência
+     * Mostra a sequência da Raiz até a tarefa selecionada
+     */
+    public void verificarCaminhoDependencia() {
+        System.out.println("\n-- VERIFICAR CAMINHO DE DEPENDÊNCIA --");
+        
+        System.out.print("Digite o ID da tarefa: ");
+        int idBuscado;
+        try {
+            idBuscado = sc.nextInt();
+            sc.nextLine();
+        } catch (Exception e) {
+            System.out.println("Erro: ID inválido");
+            sc.nextLine();
+            return;
+        }
+
+        // Busca a tarefa no Map (O(1))
+        Tarefa tarefaAtual = tarefas.get(idBuscado);
+
+        if (tarefaAtual == null) {
+            System.out.println("Erro: Tarefa com ID " + idBuscado + " não encontrada");
+            return;
+        }
+
+        List<String> caminho = new ArrayList<>();
+
+        // Subida, vai do filho para o pai até o pai ser null
+        Tarefa temp = tarefaAtual;
+        while (temp != null) {
+            caminho.add("[" + temp.getId() + "] " + temp.getDescricao());
+            temp = temp.getPai(); // sobe um nível na árvore
+        }
+
+        // A lista está invertida (Filho -> Pai -> Raiz)
+        // Usamos Collections do Java para inverter (Raiz -> Pai -> Filho)
+        Collections.reverse(caminho);
+
+        // Printa o caminho
+        System.out.println("\nCaminho encontrado:");
+        System.out.println(String.join(" -> ", caminho));
     }
 }

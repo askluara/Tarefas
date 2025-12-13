@@ -1,16 +1,11 @@
 package com.tarefas;
 import java.util.Scanner;
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
+
+public class App {
+    public static void main( String[] args ) {
         Scanner sc = new Scanner(System.in);
         GerenciadorTarefas gerenciador = new GerenciadorTarefas();
-        int opcao = -1;
+        int op = -1;
 
         /*
         Criando um menu simples para realização das seguintes atividades:
@@ -23,7 +18,7 @@ public class App
         6. Mostrar estrutura de tarefas em formato de árvore.
         */
         while (op != 0) {
-            System.out.println(" --- MENU --- ");
+            System.out.println("\n--- MENU --- ");
             System.out.println("Escolha o que deseja realizar:");
             System.out.println("1. Criar nova tarefa");
             System.out.println("2. Registrar uma tarefa dependente de outra");
@@ -35,12 +30,10 @@ public class App
             System.out.println("0. Encerrar o Programa");
             op = sc.nextInt();
             sc.nextLine();
+            
             switch (op) {
                 case 1:
                     gerenciador.newTarefa();
-                    break;
-                case 1:
-                    
                     break;
                 case 2:
                     
@@ -49,7 +42,7 @@ public class App
                     
                     break;
                 case 4:
-                    
+                    gerenciador.verificarCaminhoDependencia();
                     break;
                 case 5:
                     
