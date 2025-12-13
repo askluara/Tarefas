@@ -36,7 +36,7 @@ public class App {
                     gerenciador.newTarefa();
                     break;
                 case 2:
-                    
+                     gerenciador.registrarDependencia();
                     break;
                 case 3:
                     

@@ -1,11 +1,11 @@
 package com.tarefas;
 
-import java.util.Scanner;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 /*
  * Classe responsável por armazenar e gerenciar todas as tarefas criadas.
@@ -126,5 +126,48 @@ public class GerenciadorTarefas {
         // Printa o caminho
         System.out.println("\nCaminho encontrado:");
         System.out.println(String.join(" -> ", caminho));
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * FUNCIONALIDADE 2: REGISTRAR DEPENDENCIA
+     * DESENVOLVIDO POR: RAIANE MELGACO
+     * ---------------------------------------------------------
+     */
+    public void registrarDependencia() {
+        System.out.println("-- REGISTRAR DEPENDENCIA --");
+        
+        for (Tarefa t : tarefas.values()) {
+            System.out.println("ID: " + t.getId() + " - " + t.getDescricao());
+        }
+        
+        try {
+            System.out.print("DIGITE O ID DA TAREFA PAI: ");
+            int idPai = sc.nextInt();
+            
+            System.out.print("DIGITE O ID DA TAREFA FILHO: ");
+            int idFilho = sc.nextInt();
+            sc.nextLine(); 
+
+            if (idPai == idFilho) {
+                System.out.println("Erro: IDs iguais.");
+                return;
+            }
+
+            Tarefa pai = tarefas.get(idPai);
+            Tarefa filho = tarefas.get(idFilho);
+
+            if (pai == null || filho == null) {
+                System.out.println("Erro: Tarefa nao encontrada.");
+                return;
+            }
+
+            pai.adicionarFilho(filho);
+            System.out.println("Dependencia registrada com sucesso !");
+            
+        } catch (Exception e) {
+            System.out.println("Erro: Voce deve digitar apenas numeros inteiros!");
+            sc.nextLine(); // Limpa o buffer do scanner para nao travar
+        }
     }
 }
