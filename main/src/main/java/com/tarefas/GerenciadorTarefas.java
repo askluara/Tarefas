@@ -130,6 +130,62 @@ public class GerenciadorTarefas {
     }
 
     /*
+     * 3 - Remover Tarefa
+     * Remove a tarefa selecionada e todas as suas subtarefas dependentes
+     *
+     * Desenvolvido por: Ana Clara Costa Sousa
+     */
+    public void removerTarefa() {
+        System.out.println("\n-- REMOVER TAREFA --");
+        System.out.print("DIGITE O ID DA TAREFA QUE DESEJA REMOVER: ");
+
+        try {
+            int id = sc.nextInt();
+            sc.nextLine(); // Limpa buffer
+
+            Tarefa tarefaAlvo = tarefas.get(id);
+
+            if (tarefaAlvo == null) {
+                System.out.println("Erro: Tarefa com ID " + id + " não encontrada.");
+                return;
+            }
+
+            // AVISO DE SEGURANÇA
+            if (!tarefaAlvo.getFilhos().isEmpty()) {
+                System.out.println("AVISO: Esta tarefa possui " + tarefaAlvo.getFilhos().size() + " subtarefas.");
+                System.out.println("Removê-la irá apagar TODAS as tarefas dependentes dela.");
+                System.out.print("Tem certeza? (S/N): ");
+                String confirmacao = sc.nextLine();
+                if (!confirmacao.equalsIgnoreCase("S")) {
+                    System.out.println("Operação cancelada.");
+                    return;
+                }
+            }
+
+            // 1- Desconectar do pai, se houver
+            if (tarefaAlvo.getPai() != null) {
+                tarefaAlvo.getPai().getFilhos().remove(tarefaAlvo);
+            }
+
+            // 2- Remover recursivamente
+            removerRecursivamente(tarefaAlvo);
+
+            System.out.println("Tarefa e dependentes removidos com sucesso.");
+
+        } catch (Exception e) {
+            System.out.println("Erro: Entrada inválida. Digite apenas números.");
+            sc.nextLine();
+        }
+    }
+
+    private void removerRecursivamente(Tarefa t) {
+        for (Tarefa filho : t.getFilhos()) {
+            removerRecursivamente(filho);
+        }
+        tarefas.remove(t.getId());
+    }
+
+    /*
      * 4 - Verificar caminho de dependência
      * Mostra a sequência da Raiz até a tarefa selecionada
      * 

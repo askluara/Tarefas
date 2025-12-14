@@ -43,7 +43,7 @@ public class App {
                     gerenciador.registrarDependencia();
                     break;
                 case 3:
-
+                    gerenciador.removerTarefa();
                     break;
                 case 4:
                     gerenciador.verificarCaminhoDependencia();
