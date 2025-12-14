@@ -75,7 +75,7 @@ public class App {
                     }
                     break;
                 case 7:
-
+                    gerenciador.exibirArvore();
                     break;
                 case 0:
                     System.out.println("Encerrando o programa");

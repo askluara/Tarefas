@@ -242,7 +242,7 @@ public class GerenciadorTarefas {
      */
     public List<Tarefa> listarRaizes() {
         List<Tarefa> raizes = new ArrayList<>();
-        
+
         // Itera sobre todas as tarefas armazenadas no HashMap (tarefas.values())
         for (Tarefa tarefa : tarefas.values()) {
             // Uma raiz é uma tarefa que não tem pai
@@ -280,7 +280,8 @@ public class GerenciadorTarefas {
         if (raizes.isEmpty()) {
             System.out.println("Nenhuma tarefa raiz encontrada.");
         } else {
-            raizes.forEach(t -> System.out.println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
+            raizes.forEach(t -> System.out
+                    .println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
         }
 
         // 2. Mostrar Folhas
@@ -289,7 +290,41 @@ public class GerenciadorTarefas {
         if (folhas.isEmpty()) {
             System.out.println("Nenhuma tarefa folha encontrada.");
         } else {
-            folhas.forEach(t -> System.out.println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
+            folhas.forEach(t -> System.out
+                    .println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
+        }
+    }
+
+    /*
+     * ---------------------------------------------------------
+     * FUNCIONALIDADE 6: Mostrar estrutura de tarefas em formato de árvore.
+     * DESENVOLVIDO POR: Alexandro Costa
+     * ---------------------------------------------------------
+     */
+
+    public void exibirArvore() {
+        System.out.println("\n--- ESTRUTURA DE TAREFAS (ÁRVORE) ---");
+        List<Tarefa> raizes = listarRaizes();
+
+        if (raizes.isEmpty()) {
+            System.out.println("Nenhuma tarefa para exibir.");
+            return;
+        }
+
+        for (int i = 0; i < raizes.size(); i++) {
+            exibirNo(raizes.get(i), "", i == raizes.size() - 1);
+        }
+    }
+
+    private void exibirNo(Tarefa tarefa, String prefixo, boolean isLast) {
+        System.out.println(prefixo + (isLast ? "└── " : "├── ") + "[" + tarefa.getId() + "] " + tarefa.getDescricao()
+                + " (Prioridade: "
+                + tarefa.getPrioridade() + ")");
+
+        List<Tarefa> filhos = tarefa.getFilhos();
+        for (int i = 0; i < filhos.size(); i++) {
+            String novoPrefixo = prefixo + (isLast ? "    " : "│   ");
+            exibirNo(filhos.get(i), novoPrefixo, i == filhos.size() - 1);
         }
     }
 
