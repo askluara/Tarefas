@@ -231,10 +231,11 @@ public class GerenciadorTarefas {
         System.out.println(String.join(" -> ", caminho));
     }
 
-    /*---------------------------------------------------------
-     *FUNCIONALIDADE 5: LISTAR RAÍZES E FOLHAS
-     *DESENVOLVIDO POR: Nickolas Gabriel
-     *---------------------------------------------------------
+    /*
+     * ---------------------------------------------------------
+     * FUNCIONALIDADE 5: LISTAR RAÍZES E FOLHAS
+     * DESENVOLVIDO POR: Nickolas Gabriel
+     * ---------------------------------------------------------
      */
 
     /*
@@ -269,12 +270,7 @@ public class GerenciadorTarefas {
         return folhas;
     }
 
-    /*
-     * Método interativo para mostrar as tarefas raízes e folhas.
-     */
-    public void mostrarRaizesEFolhas() {
-
-        // 1. Mostrar Raízes
+    public void mostrarRaizes() {
         List<Tarefa> raizes = listarRaizes();
         System.out.println("\n--- TAREFAS SEM DEPENDÊNCIAS (RAÍZES) ---");
         if (raizes.isEmpty()) {
@@ -283,8 +279,12 @@ public class GerenciadorTarefas {
             raizes.forEach(t -> System.out
                     .println("ID " + t.getId() + ": " + t.getDescricao() + " | Prioridade: " + t.getPrioridade()));
         }
+    }
 
-        // 2. Mostrar Folhas
+    /*
+     * Método interativo para mostrar as tarefas folhas.
+     */
+    public void mostrarFolhas() {
         List<Tarefa> folhas = listarFolhas();
         System.out.println("\n--- TAREFAS FINAIS (FOLHAS) ---");
         if (folhas.isEmpty()) {
@@ -327,5 +327,4 @@ public class GerenciadorTarefas {
             exibirNo(filhos.get(i), novoPrefixo, i == filhos.size() - 1);
         }
     }
-
 }
