@@ -41,53 +41,53 @@ public class Tarefa {
         filho.setPai(this);
         filhos.add(filho);
     }
-public int getId() {
-    return id;
-}
+    public int getId() {
+        return id;
+    }
 
-public void setId(int id) {
-    this.id = id;
-}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-public int getPrioridade() {
-    return prioridade;
-}
+    public int getPrioridade() {
+        return prioridade;
+    }
 
-public void setPrioridade(int prioridade) {
-    this.prioridade = prioridade;
-}
+    public void setPrioridade(int prioridade) {
+        this.prioridade = prioridade;
+    }
 
-public String getDescricao() {
-    return descricao;
-}
+    public String getDescricao() {
+        return descricao;
+    }
 
-public void setDescricao(String descricao) {
-    this.descricao = descricao;
-}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-public String getPrazo() {
-    return prazo;
-}
+    public String getPrazo() {
+        return prazo;
+    }
 
-public void setPrazo(String prazo) {
-    this.prazo = prazo;
-}
+    public void setPrazo(String prazo) {
+        this.prazo = prazo;
+    }
 
-public Tarefa getPai() {
-    return pai;
-}
+    public Tarefa getPai() {
+        return pai;
+    }
 
-public void setPai(Tarefa pai) {
-    this.pai = pai;
-}
+    public void setPai(Tarefa pai) {
+        this.pai = pai;
+    }
 
-public List<Tarefa> getFilhos() {
-    return filhos;
-}
-
-public void setFilhos(List<Tarefa> filhos) {
-    this.filhos = filhos;
-}
+    public List<Tarefa> getFilhos() {
+        return filhos;
+    }
+    
+    public void setFilhos(List<Tarefa> filhos) {
+        this.filhos = filhos;
+    }
 
 }
 
